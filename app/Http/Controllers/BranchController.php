@@ -9,19 +9,40 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BranchController extends Controller
 {
-    public function getAllBranchs(): Response {
+    public function getAllBranchs(Request $request): Response {
         try {
-            $branchs = Branch::all();
+             if ($request->select){
+                $branches = Branch::orderBy('name')->get();
+            }
+            elseif ($request->search) {
+                $branches = Branch::where(
+                    'name',
+                    'LIKE',
+                    "%{$request->search}%"
+                )
+                ->paginate(10);
+            } else {
+                $branches = Branch::paginate(10);
+            }
 
-             return Response()->json(
+            for ($index = 0; $index < count($branches); $index++) {
+                $branchItem = Branch::find($branches[$index]['id']);
+
+                $branchDepartment = $branchItem->department;
+                $branches[$index]['department'] = $branchDepartment;
+
+                $branchCity = $branchItem->city;
+                $branches[$index]['city'] = $branchCity;
+            }
+
+            return Response()->json(
                 [
-                    'data' => $branchs,
-                    'message' => 'all Branchs.',
+                    'data' => $branches,
+                    'message' => 'All Branches successfully',
                     'status' => 200,
                 ],
-                500
+                200
             );
-
         } catch (\Exception $error) {
             return Response()->json(
                 [

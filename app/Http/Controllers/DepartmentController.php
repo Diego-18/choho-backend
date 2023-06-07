@@ -17,7 +17,7 @@ class DepartmentController extends Controller
                     'message' => 'All Departments.',
                     'status' => 200,
                 ],
-                500
+                200
             );
 
         } catch (\Exception $error) {

@@ -20,4 +20,9 @@ class City extends Model
     {
         return $this->belongsTo('App\Models\Order', 'id', 'order_id');
     }
+
+    public function city()
+    {
+        return $this->belongsTo('App\Models\Branch', 'id', 'city_id');
+    }
 }

@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CityController extends Controller
 {
     //
-    public function getAllCities(): Response {
+    public function getAllCities(Request $request): Response {
         try {
-            $cities = City::all();
+            $cities = City::where('department_id', '=', $request->department_id)->get();
 
             for ($index = 0; $index < count($cities); $index++) {
                 $city = City::find($cities[$index]['id']);
@@ -25,7 +26,7 @@ class CityController extends Controller
                     'message' => 'All Cities.',
                     'status' => 200,
                 ],
-                500
+                200
             );
 
         } catch (\Exception $error) {

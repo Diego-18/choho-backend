@@ -9,7 +9,7 @@ class Department extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'capital'];
 
     public function city()
     {
@@ -19,5 +19,10 @@ class Department extends Model
     public function order()
     {
         return $this->belongsTo('App\Models\Order', 'id', 'order_id');
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo('App\Models\Branch', 'id', 'department_id');
     }
 }
