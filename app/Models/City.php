@@ -16,4 +16,8 @@ class City extends Model
         return $this->hasMany('App\Models\Department', 'id', 'department_id');
     }
 
+    public function order()
+    {
+        return $this->belongsTo('App\Models\Order', 'id', 'order_id');
+    }
 }

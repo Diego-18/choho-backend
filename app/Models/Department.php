@@ -15,4 +15,9 @@ class Department extends Model
     {
         return $this->belongsTo('App\Models\City', 'id', 'city_id');
     }
+
+    public function order()
+    {
+        return $this->belongsTo('App\Models\Order', 'id', 'order_id');
+    }
 }
