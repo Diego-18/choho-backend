@@ -3,7 +3,14 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use
-    App\Http\Controllers\{ProviderController, BranchController, UserController, DepartmentController, CityController};
+    App\Http\Controllers\{
+        ProviderController,
+        BranchController,
+        UserController,
+        DepartmentController,
+        CityController,
+        ProductController
+    };
 
 
 /*
@@ -34,14 +41,14 @@ Route::controller(UserController::class)->group(function () {
 });
 
 Route::controller(BranchController::class)->group(function () {
-    Route::get('/branchs', 'getAllBranchs');
+    Route::post('/branches', 'getAllBranchs');
     Route::post('/branch', 'createBranch');
     Route::put('/branch/{id}', 'updateBranch');
     Route::delete('/branch/{id}', 'deleteBranch');
 });
 
 Route::controller(ProductController::class)->group(function () {
-    Route::get('/products', 'getAllProducts');
+    Route::post('/products', 'getAllProducts');
     Route::post('/product', 'createProduct');
     Route::put('/product/{id}', 'updateProduct');
     Route::delete('/product/{id}', 'deleteProduct');
@@ -56,9 +63,9 @@ Route::controller(OrderController::class)->group(function () {
 
 
 Route::controller(DepartmentController::class)->group(function () {
-    Route::get('/departments', 'getAllDepartments');
+    Route::post('/departments', 'getAllDepartments');
 });
 
 Route::controller(CityController::class)->group(function () {
-    Route::get('/cities', 'getAllCities');
+    Route::post('/cities', 'getAllCities');
 });
