@@ -9,17 +9,29 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
-    public function getAllProducts(): Response {
+    public function getAllProducts(Request $request): Response {
         try {
-            $products = Product::all();
+            if ($request->select){
+                $product = Product::orderBy('name')->get();
+            }
+            elseif ($request->search) {
+                $product = Product::where(
+                    'name',
+                    'LIKE',
+                    "%{$request->search}%"
+                )
+                ->paginate(10);
+            } else {
+                $product = Product::paginate(10);
+            }
 
-             return Response()->json(
+            return Response()->json(
                 [
-                    'data' => $products,
-                    'message' => 'All Products.',
+                    'data' => $product,
+                    'message' => 'All Products successfully',
                     'status' => 200,
                 ],
-                500
+                200
             );
 
         } catch (\Exception $error) {
@@ -34,7 +46,7 @@ class ProductController extends Controller
         }
     }
 
-    public function createProvider(Request $request): Response {
+    public function createProduct(Request $request): Response {
         try {
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string',
