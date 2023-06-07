@@ -10,17 +10,29 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProviderController extends Controller
 {
-    public function getAllProviders(): Response {
+    public function getAllProviders(Request $request): Response {
         try {
-            $providers = Provider::all();
+            if ($request->select){
+                $provider = Provider::orderBy('razon_social')->get();
+            }
+            elseif ($request->search) {
+                $provider = Provider::where(
+                    'razon_social',
+                    'LIKE',
+                    "%{$request->search}%"
+                )
+                ->paginate(10);
+            } else {
+                $provider = Provider::paginate(10);
+            }
 
-             return Response()->json(
+            return Response()->json(
                 [
-                    'data' => $providers,
-                    'message' => 'all Providers.',
+                    'data' => $provider,
+                    'message' => 'All Providers successfully',
                     'status' => 200,
                 ],
-                500
+                200
             );
 
         } catch (\Exception $error) {
