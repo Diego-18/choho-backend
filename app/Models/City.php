@@ -11,4 +11,9 @@ class City extends Model
 
     protected $fillable = ['name', 'department_id'];
 
+    public function department()
+    {
+        return $this->hasMany('App\Models\Department', 'id', 'department_id');
+    }
+
 }

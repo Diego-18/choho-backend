@@ -10,4 +10,9 @@ class Department extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function city()
+    {
+        return $this->belongsTo('App\Models\City', 'id', 'city_id');
+    }
 }
