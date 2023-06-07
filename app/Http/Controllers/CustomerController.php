@@ -2,34 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Provider;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 
-class ProviderController extends Controller
+class CustomerController extends Controller
 {
-    public function getAllProviders(Request $request): Response {
+    public function getAllCustomers(Request $request): Response {
         try {
             if ($request->select){
-                $provider = Provider::orderBy('razon_social')->get();
+                $customer = Customer::orderBy('razon_social')->get();
             }
             elseif ($request->search) {
-                $provider = Provider::where(
+                $customer = Customer::where(
                     'razon_social',
                     'LIKE',
                     "%{$request->search}%"
                 )
                 ->paginate(10);
             } else {
-                $provider = Provider::paginate(10);
+                $customer = Customer::paginate(10);
             }
 
             return Response()->json(
                 [
-                    'data' => $provider,
-                    'message' => 'All Providers successfully',
+                    'data' => $customer,
+                    'message' => 'All Customers successfully',
                     'status' => 200,
                 ],
                 200
@@ -47,7 +47,7 @@ class ProviderController extends Controller
         }
     }
 
-    public function createProvider(Request $request): Response {
+    public function createCustomer(Request $request): Response {
         try {
             $validator = Validator::make($request->all(), [
                 'nit' => 'required|string',
@@ -68,8 +68,8 @@ class ProviderController extends Controller
                 );
             }
 
-            $provider = new Provider();
-            $provider->create($request->all());
+            $customer = new Customer();
+            $customer->create($request->all());
 
             return Response()->json(
                 [
@@ -91,7 +91,7 @@ class ProviderController extends Controller
         }
     }
 
-    public function updateProvider(Request $request): Response{
+    public function updateCustomer(Request $request): Response{
         try {
             $validator = Validator::make($request->all(), [
                 'nit' => 'required|string',
@@ -114,18 +114,18 @@ class ProviderController extends Controller
 
             $id = $request->id;
 
-            if (Provider::where(['id' => $id])->exists()) {
-                $provider = Provider::findOrFail($id);
-                $provider->update($request->all());
+            if (Customer::where(['id' => $id])->exists()) {
+                $customer = Customer::findOrFail($id);
+                $customer->update($request->all());
 
                 return response()->json([
                     'status' => 200,
-                    'msg' => 'Provider successfully updated.',
+                    'msg' => 'Customer successfully updated.',
                 ]);
             } else {
                 return response()->json([
                     'status' => 404,
-                    'msg' => 'Provider not found.',
+                    'msg' => 'Customer not found.',
                 ]);
             }
         } catch (\Exception $error) {
@@ -140,21 +140,21 @@ class ProviderController extends Controller
         }
     }
 
-    public function deleteProvider(Request $request): Response {
+    public function deleteCustomer(Request $request): Response {
         try {
             $id = $request->id;
-            if (Provider::where(['id' => $id])->exists()) {
-                $provider = Provider::where(['id' => $id])->first();
-                $provider->delete();
+            if (Customer::where(['id' => $id])->exists()) {
+                $customer = Customer::where(['id' => $id])->first();
+                $customer->delete();
 
                 return response()->json([
                     'status' => 200,
-                    'msg' => 'Provider successfully deleted.',
+                    'msg' => 'Customer successfully deleted.',
                 ]);
             } else {
                 return response()->json([
                     'status' => 404,
-                    'msg' => 'Provider not found.',
+                    'msg' => 'Customer not found.',
                 ]);
             }
         } catch (\Exception $error) {

@@ -11,9 +11,9 @@ class Order extends Model
 
     protected $fillable = ['order_date', 'prefix', 'order_number', 'seller', 'provider_id', 'department_id', 'city_id', 'user_id'];
 
-    public function provider()
+    public function customer()
     {
-        return $this->hasMany('App\Models\Provider', 'id', 'provider_id');
+        return $this->hasMany('App\Models\Customer', 'id', 'customer_id');
     }
 
     public function department()

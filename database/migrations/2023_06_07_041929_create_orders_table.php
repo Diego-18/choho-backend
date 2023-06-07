@@ -18,9 +18,9 @@ return new class extends Migration
             $table->integer('order_number');
             $table->string("seller");
             $table
-                ->foreignId('provider_id')
+                ->foreignId('customer_id')
                 ->references('id')
-                ->on('providers')
+                ->on('customers')
                 ->nullable();
             $table
                 ->foreignId('department_id')

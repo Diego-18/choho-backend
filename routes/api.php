@@ -4,12 +4,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use
     App\Http\Controllers\{
-        ProviderController,
+        CustomerController,
         BranchController,
         UserController,
         DepartmentController,
         CityController,
-        ProductController
+        ProductController,
+        OrderController,
     };
 
 
@@ -28,11 +29,11 @@ use
 //     return $request->user();
 // });
 
-Route::controller(ProviderController::class)->group(function () {
-    Route::post('/providers', 'getAllProviders');
-    Route::post('/provider', 'createProvider');
-    Route::put('/provider/{id}', 'updateProvider');
-    Route::delete('/provider/{id}', 'deleteProvider');
+Route::controller(CustomerController::class)->group(function () {
+    Route::post('/customers', 'getAllCustomers');
+    Route::post('/customer', 'createCustomer');
+    Route::put('/customer/{id}', 'updateCustomer');
+    Route::delete('/customer/{id}', 'deleteCustomer');
 });
 
 Route::controller(UserController::class)->group(function () {
